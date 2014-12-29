@@ -1,6 +1,6 @@
 use Rack::Static, 
   :urls => ["/"], 
-  :root => "public",
+  :root => "#{Dir.pwd}/public",
   :index => "index.html",
   :header_rules => [[:all, {'Cache-Control' => 'public, max-age=3600'}]]
 
