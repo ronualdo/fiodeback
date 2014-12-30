@@ -2,7 +2,7 @@ require 'rubygems'
 require 'cucumber'
 require 'cucumber/rake/task'
 
-task :default => [:features]
+task :default => [:test, :features]
 task :features => ["serverup"]
 
 task :serverup do
@@ -27,4 +27,8 @@ task :features do
   ensure
     Rake::Task[:serverdown].invoke
   end
+end
+
+task :test do
+  fail unless system "mocha"
 end
