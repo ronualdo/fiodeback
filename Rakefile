@@ -5,11 +5,6 @@ require 'cucumber/rake/task'
 task :default => [:features]
 task :features => ["serverup"]
 
-Cucumber::Rake::Task.new(:features) do |t|
-  t.cucumber_opts = "features --format pretty"
-end
-
-
 task :serverup do
   system "rackup -D -P build/server.pid config.ru"
   sleep 3
@@ -20,4 +15,16 @@ task :serverdown do
   is_down = system "kill #{pid}"
 
   is_down ? puts("Server is down") : puts("Impossible to kill process") 
+end
+
+Cucumber::Rake::Task.new(:cucumber) do |t|
+  t.cucumber_opts = "features --format pretty"
+end
+
+task :features do
+  begin
+    Rake::Task[:cucumber].invoke
+  ensure
+    Rake::Task[:serverdown].invoke
+  end
 end
