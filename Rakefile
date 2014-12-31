@@ -5,6 +5,8 @@ require 'cucumber/rake/task'
 task :default => [:test, :features]
 task :features => ["serverup"]
 
+FileUtils.mkdir "build"
+
 task :serverup do
   system "rackup -D -P build/server.pid config.ru"
   sleep 3
